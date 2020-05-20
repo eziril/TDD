@@ -1,6 +1,5 @@
 from django.urls import resolve
 from django.test import TestCase
-from django.http import HttpRequest
 
 from lists.views import home_page
 from lists.models import Item
@@ -41,8 +40,8 @@ class HomePageTest(TestCase):
         self.assertEqual(Item.objects.count(), 0)
 
     def test_displays_all_list_items(self):
-        Item.objects.create('itemey 1')
-        Item.objects.create('itemey 2')
+        Item.objects.create(text='itemey 1')
+        Item.objects.create(text='itemey 2')
 
         response = self.client.get('/')
 
@@ -63,4 +62,3 @@ class ItemModelTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual(first_saved_item.text, 'The first (ever) list item')
         self.assertEqual(second_saved_item.text, 'Item the second')
-        

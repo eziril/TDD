@@ -25,7 +25,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser.quit()
     
     def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element_by_id('id_list_table')
+        table = self.browser.find_element_by_id("id_list_table")
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn(row_text, [row.text for row in rows])
 
@@ -98,7 +98,12 @@ class NewVisitorTest(LiveServerTestCase):
         ## We use a new browser session to make sure that no information
         ## of Edith's is coming through from cookies etc
         self.browser.quit()
-        self.browser = webdriver.Firefox()
+        WINDOW_SIZE = "1920,1080"
+        options = Options()  
+        options.add_argument('--no-sandbox')
+        options.add_argument("--headless")  
+        options.add_argument("--window-size=%s" % WINDOW_SIZE)
+        self.browser = webdriver.Chrome(options=options)
         # Francis visits the home page. There is no sign of Edith's
         # list
         self.browser.get(self.live_server_url)
